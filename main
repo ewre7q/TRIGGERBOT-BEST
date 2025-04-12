@@ -1,0 +1,46 @@
+         -- 🔫 TriggerBot - 17v4 
+-- 📢 
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+
+local TriggerEnabled = false
+
+-- 🧠 NOFS
+local function notify(msg)
+    StarterGui:SetCore("SendNotification", {
+        Title = "🎯TriggerBot",
+        Text = msg,
+        Duration = 2
+    })
+end
+
+-- 🛑 Toggle Tuşu: T
+UIS.InputBegan:Connect(function(input, gpe)
+    if gpe then return end
+    if input.KeyCode == Enum.KeyCode.T then
+        TriggerEnabled = not TriggerEnabled
+        notify(TriggerEnabled and "TriggerBot Active🟢" or "TriggerBot Inactive🔴")
+    end
+end)
+
+-- 🔁 Ana Döngü
+RunService.RenderStepped:Connect(function()
+    if not TriggerEnabled then return end
+
+    local tool = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    if not tool then return end
+
+    local mouse = LocalPlayer:GetMouse()
+    local target = mouse.Target
+
+    if target and target.Parent and target.Parent:FindFirstChild("Humanoid") then
+        mouse1click() -- 🟢 Vurur (Tüm vücut parçalarına çalışır)
+    end
+end)
+
+    	end
+})
